@@ -1,6 +1,5 @@
 package com.example.Springboot_Bootstrap_312.controller;
 
-import com.example.Springboot_Bootstrap_312.model.Role;
 import com.example.Springboot_Bootstrap_312.model.User;
 import com.example.Springboot_Bootstrap_312.service.RoleService;
 import com.example.Springboot_Bootstrap_312.service.UserService;
@@ -16,10 +15,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,31 +34,18 @@ public class AdminController {
         model.addAttribute("user", user);
         model.addAttribute("allUsers", userService.findAll());
         model.addAttribute("allRoles", roleService.findAll());
-        return "admin";
+        return "adminpage";
     }
 
     @PostMapping("/add-user")
-    public String createUser(@ModelAttribute User user
-//                             @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles
-    ) {
-//        Set<Role> roleSet = new HashSet<>();
-//        for (String role : checkBoxRoles) {
-//            roleSet.add(roleService.getRoleByName(role));
-//        }
-//        user.setRoles(roleSet);
+    public String createUser(@ModelAttribute User user) {
         userService.saveUser(user);
         return "redirect:/admin";
     }
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user,
-                             @PathVariable("id") Long id
-//                             @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles
-    ) {
-//        Set<Role> roleSet = new HashSet<>();
-//        for (String role : checkBoxRoles) {
-//            roleSet.add(roleService.getRoleByName(role));
-//        }
+                             @PathVariable("id") Long id) {
         userService.updateUser(id, user);
         return "redirect:/admin";
     }
